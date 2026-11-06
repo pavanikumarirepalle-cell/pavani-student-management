@@ -1,0 +1,307 @@
+
+<!-- To list one student data -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Student</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .search-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            margin: 5px auto;
+            max-width: 1250px;
+            padding: 0 15px;
+        }
+
+        .search-form {
+            flex: 0.9;
+            text-align: center;
+            padding-left: 30px;
+        }
+
+        .search-form h2 {
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+
+        .search-form label {
+            display: block;
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .search-form select {
+            width: 90%;
+            max-width: 350px;
+            padding: 13px;
+            font-size: 18px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .search-form button {
+            display: block;
+            margin: 0 auto;
+            padding: 12px 32px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Larger image without increasing page height */
+        .search-image {
+            flex: 1.5;
+            min-width: 0;
+            height: 350px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px;
+        }
+
+        .result-section {
+            max-width: 1100px;
+            margin: 5px auto;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        #studentTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #studentTable th,
+        #studentTable td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #aaa;
+        }
+
+        #studentTable th {
+            background-color: #3730a3;
+            color: white;
+        }
+
+        .home-button {
+            display: block;
+            margin: 15px auto;
+            padding: 10px 25px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        #message {
+            text-align: center;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 700px) {
+            .search-layout {
+                flex-direction: column;
+                gap: 10px;
+                margin: 5px auto;
+            }
+
+            .search-form {
+                width: 100%;
+                padding-left: 0;
+            }
+
+            .search-form h2 {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .search-image {
+                width: 100%;
+                height: 300px;
+                flex: none;
+            }
+
+            .search-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>SEARCH STUDENT</h1>
+    <hr>
+
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="list.html">List Students</a> |
+        <a href="listOne.html">List Required Student</a> |
+        <a href="insert.html">Insert Student</a> |
+        <a href="update.html">Update Student</a> |
+        <a href="delete.html">Delete Student</a>
+    </nav>
+
+    <hr>
+
+    <div class="search-layout">
+
+        <div class="search-form">
+            <h2>Search Student</h2>
+
+            <label for="sno">Select Student</label>
+
+            <select id="sno">
+                <option value="">Select Student</option>
+            </select>
+
+            <button type="button" onclick="searchStudent()">
+                Search
+            </button>
+        </div>
+
+        <div class="search-image">
+            <img src="images/student.png" alt="Student studying">
+        </div>
+
+    </div>
+
+    <p id="message"></p>
+
+    <div class="result-section">
+        <table border="1" id="studentTable">
+            <thead>
+                <tr>
+                    <th>Student Number</th>
+                    <th>Name</th>
+                    <th>Total</th>
+                    <th>Age</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentData"></tbody>
+        </table>
+    </div>
+
+    <button class="home-button"
+        onclick="location.href='index.html'">
+        Home Page
+    </button>
+
+    <script>
+        // Load student numbers from database
+        async function loadStudentIds() {
+            const dropdown = document.getElementById("sno");
+            const message = document.getElementById("message");
+
+            try {
+                const response = await fetch("/students");
+
+                if (!response.ok) {
+                    throw new Error("Unable to load students");
+                }
+
+                const students = await response.json();
+
+                students.forEach(student => {
+                    const option = document.createElement("option");
+
+                    option.value = student.student_id;
+                    option.textContent = student.student_id;
+
+                    dropdown.appendChild(option);
+                });
+
+                if (students.length === 0) {
+                    message.textContent = "No students available.";
+                }
+
+            } catch (error) {
+                message.textContent =
+                    "Unable to load Student IDs. Check the server.";
+                console.error(error);
+            }
+        }
+
+        // Search selected student
+        async function searchStudent() {
+            const sno = document.getElementById("sno").value;
+            const message = document.getElementById("message");
+            const tbody = document.getElementById("studentData");
+
+            message.textContent = "";
+            tbody.replaceChildren();
+
+            if (sno === "") {
+                message.textContent = "Please select a Student ID.";
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    "/students/" + encodeURIComponent(sno)
+                );
+
+                if (!response.ok) {
+                    throw new Error("Student not found");
+                }
+
+                const data = await response.json();
+                const student = Array.isArray(data) ? data[0] : data;
+
+                if (!student || student.student_id == null) {
+                    message.textContent = "Student Not Found";
+                    return;
+                }
+
+                const values = [
+                    student.student_id,
+                    student.student_name ?? student.name,
+                    student.total,
+                    student.age,
+                    student.phone
+                ];
+
+                const row = document.createElement("tr");
+
+                values.forEach(value => {
+                    const cell = document.createElement("td");
+                    cell.textContent = value ?? "";
+                    row.appendChild(cell);
+                });
+
+                tbody.appendChild(row);
+
+            } catch (error) {
+                message.textContent =
+                    "Unable to fetch student details. Check the server.";
+                console.error(error);
+            }
+        }
+
+        loadStudentIds();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+
+<!-- UPDATE STUDENT DETAILS -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Student</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .update-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            max-width: 1250px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .update-form {
+            width: 400px;
+            max-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .update-form h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .update-form label {
+            display: block;
+            margin-top: 12px;
+        }
+
+        .update-form input,
+        .update-form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .update-image {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .update-image img {
+            display: block;
+            width: 100%;
+            max-width: 650px;
+            height: 500px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 700px) {
+            .update-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .update-form {
+                width: 100%;
+            }
+
+            .update-image {
+                width: 100%;
+            }
+
+            .update-image img {
+                width: 100%;
+                max-width: 600px;
+                height: 400px;
+                object-fit: contain;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>UPDATE STUDENT</h1>
+<hr>
+
+<nav>
+    <a href="index.html">Home</a> |
+    <a href="list.html">List Students</a> |
+    <a href="listOne.html">List Required Student</a> |
+    <a href="insert.html">Insert Student</a> |
+    <a href="update.html">Update Student</a> |
+    <a href="delete.html">Delete Student</a>
+</nav>
+
+<hr>
+
+<div class="update-container">
+
+    <div class="update-form">
+
+        <form id="updateForm">
+
+            <label for="sno">Student Number</label>
+            <select id="sno" required>
+                <option value="">Select Student Number</option>
+            </select>
+
+            <label for="name">Student Name</label>
+            <input type="text" id="name" required>
+
+            <label for="total">Total Marks</label>
+            <input type="number" id="total" min="0" required>
+
+            <label for="age">Age</label>
+            <input type="number" id="age" min="1" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone"
+                   pattern="[0-9]{10}" maxlength="10" required>
+
+            <div class="buttons">
+                <button type="submit">Update</button>
+                <button type="button"
+                        onclick="location.href='index.html'">
+                    Home Page
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="update-image">
+        <img src="images/update.png" alt="Update Student Details">
+    </div>
+
+</div>
+
+<script>
+const snoSelect = document.getElementById("sno");
+
+// Load student numbers from database
+fetch("/students")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Could not load students");
+        }
+        return response.json();
+    })
+    .then(students => {
+        students.forEach(student => {
+            const option = document.createElement("option");
+            option.value = student.student_id;
+            option.textContent = student.student_id;
+            snoSelect.appendChild(option);
+        });
+    })
+    .catch(error => {
+        alert("Unable to load student numbers.");
+        console.error(error);
+    });
+
+// Load selected student's details
+snoSelect.addEventListener("change", function() {
+    const sno = this.value;
+
+    if (!sno) {
+        document.getElementById("name").value = "";
+        document.getElementById("total").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("phone").value = "";
+        return;
+    }
+
+    fetch("/students/" + encodeURIComponent(sno))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Student not found");
+            }
+            return response.json();
+        })
+        .then(result => {
+            const student = Array.isArray(result)
+                ? result[0]
+                : result;
+
+            if (!student) {
+                alert("Student not found");
+                return;
+            }
+
+            document.getElementById("name").value =
+                student.student_name ?? student.name ?? "";
+
+            document.getElementById("total").value =
+                student.total ?? "";
+
+            document.getElementById("age").value =
+                student.age ?? "";
+
+            document.getElementById("phone").value =
+                student.phone ?? "";
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+});
+
+// Update student details
+document.getElementById("updateForm")
+    .addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const sno = snoSelect.value;
+
+        const name = document.getElementById("name").value.trim();
+        const total = document.getElementById("total").value;
+        const age = document.getElementById("age").value;
+        const phone = document.getElementById("phone").value.trim();
+
+        fetch("/students/" + encodeURIComponent(sno), {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                total: Number(total),
+                age: Number(age),
+                phone: phone
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+
+            return response.text().then(message => {
+                throw new Error(message);
+            });
+        })
+        .then(message => {
+            alert(message || "Student updated successfully!");
+            location.href = "index.html";
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+    });
+</script>
+
+</body>
+</html>

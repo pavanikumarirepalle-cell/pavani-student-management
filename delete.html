@@ -1,0 +1,190 @@
+l
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .delete-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            max-width: 1250px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .delete-form {
+            width: 400px;
+            max-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .delete-form h2 {
+            text-align: center;
+        }
+
+        .delete-form label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .delete-form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .delete-image {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .delete-image img {
+            display: block;
+            width: 100%;
+            max-width: 650px;
+            height: 550px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 700px) {
+            .delete-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .delete-form {
+                width: 100%;
+            }
+
+            .delete-image {
+                width: 100%;
+            }
+
+            .delete-image img {
+                width: 100%;
+                max-width: 600px;
+                height: 400px;
+                object-fit: contain;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>DELETE STUDENT</h1>
+<hr>
+
+<nav>
+    <a href="index.html">Home</a> |
+    <a href="list.html">List Students</a> |
+    <a href="listOne.html">List Required Student</a> |
+    <a href="insert.html">Insert Student</a> |
+    <a href="update.html">Update Student</a> |
+    <a href="delete.html">Delete Student</a>
+</nav>
+
+<hr>
+
+<div class="delete-container">
+
+    <div class="delete-form">
+        <h2>Delete Student Details</h2>
+
+        <label for="sno">Student Number</label>
+        <select id="sno" required>
+            <option value="">Select Student Number</option>
+        </select>
+
+        <div class="buttons">
+            <button type="button" onclick="deleteStudent()">Delete</button>
+
+            <button type="button" onclick="location.href='index.html'">
+                Home Page
+            </button>
+        </div>
+    </div>
+
+    <div class="delete-image">
+        <img src="images/delete.png" alt="Delete Student">
+    </div>
+
+</div>
+
+<script>
+const snoSelect = document.getElementById("sno");
+
+// Load student numbers
+fetch("/students")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Could not load students");
+        }
+        return response.json();
+    })
+    .then(students => {
+        students.forEach(student => {
+            const option = document.createElement("option");
+            option.value = student.student_id;
+            option.textContent = student.student_id;
+            snoSelect.appendChild(option);
+        });
+    })
+    .catch(error => {
+        alert("Unable to load student numbers");
+        console.error(error);
+    });
+
+// Delete selected student
+function deleteStudent() {
+    const sno = snoSelect.value;
+
+    if (!sno) {
+        alert("Please select a Student Number");
+        return;
+    }
+
+    if (!confirm("Are you sure you want to delete student " + sno + "?")) {
+        return;
+    }
+
+    fetch("/students/" + encodeURIComponent(sno), {
+        method: "DELETE"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        }
+
+        return response.text().then(message => {
+            throw new Error(message || "Unable to delete student");
+        });
+    })
+    .then(message => {
+        alert(message || "Student deleted successfully!");
+        location.href = "index.html";
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .home-layout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .home-content {
+            flex: 1;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .home-content h2 {
+            color: #4776e6;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .home-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .home-content button {
+            width: 300px;
+            max-width: 100%;
+            margin: 12px auto;
+        }
+
+        .home-image {
+            flex: 1.3;
+            min-width: 0;
+        }
+
+        .home-image img {
+            display: block;
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 8px 22px rgba(50, 70, 120, 0.25);
+        }
+
+        @media (max-width: 750px) {
+            .home-layout {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .home-content {
+                width: 100%;
+            }
+
+            .home-image {
+                width: 100%;
+            }
+
+            .home-image img {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>STUDENT MANAGEMENT</h1>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="list.html">List Students</a>
+    <a href="listOne.html">List Required Student</a>
+    <a href="insert.html">Insert Student</a>
+    <a href="update.html">Update Student</a>
+    <a href="delete.html">Delete Student</a>
+</nav>
+
+<hr>
+
+<div class="home-layout">
+
+    <div class="home-content">
+        <h2>Welcome!</h2>
+
+        <p>
+            Manage student records easily.
+            Add, search, update and delete
+            student details in one place.
+        </p>
+
+        <button onclick="location.href='list.html'">
+            1. List Students
+        </button>
+
+        <button onclick="location.href='listOne.html'">
+            2. List Required Student
+        </button>
+
+        <button onclick="location.href='insert.html'">
+            3. Insert Student
+        </button>
+
+        <button onclick="location.href='update.html'">
+            4. Update Student
+        </button>
+
+        <button onclick="location.href='delete.html'">
+            5. Delete Student
+        </button>
+    </div>
+
+    <div class="home-image">
+        <img src="images/home.png"
+             alt="Students and Education">
+    </div>
+
+</div>
+
+</body>
+</html>

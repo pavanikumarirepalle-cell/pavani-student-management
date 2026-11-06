@@ -1,0 +1,431 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    min-height: 100vh;
+    text-align: center;
+    padding: 30px 15px;
+    color: #243b55;
+}
+
+/* Main Heading */
+h1 {
+    color: #ffffff;
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 0 auto 25px;
+    max-width: 900px;
+    font-size: 32px;
+    letter-spacing: 2px;
+    box-shadow: 0 6px 18px rgba(71, 118, 230, 0.25);
+}
+
+/* Horizontal Lines */
+hr {
+    border: none;
+    height: 2px;
+    background: #b6c8e6;
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+/* Navigation Links */
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    background: #34495e;
+    padding: 12px 16px;
+    margin: 5px 3px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+a:hover {
+    background: #8e54e9;
+    transform: translateY(-3px);
+}
+
+/* Main Content Buttons */
+button {
+
+    display: block;
+    width: 280px;
+    max-width: 100%;
+    margin: 18px auto;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #4776e6, #6a5acd);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(71, 118, 230, 0.25);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(255, 152, 0, 0.4);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+        padding: 20px 10px;
+    }
+
+    a {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+/* Student List Table */
+#studentTable {
+    width: 90%;
+    max-width: 1000px;
+    margin: 25px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(50, 70, 120, 0.15);
+}
+
+/* Table Heading */
+#studentTable th {
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    color: white;
+    padding: 16px 12px;
+    font-size: 16px;
+    text-align: center;
+}
+/* Responsive Table */
+@media (max-width: 600px) {
+    #studentTable {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    #studentTable th,
+    #studentTable td {
+        padding: 8px 5px;
+        font-size: 12px;
+    }
+}
+/* Center buttons on the home page */
+body > button {
+    display: block;
+    width: 280px;
+    max-width: 100%;
+    margin: 18px auto;
+}
+
+/* Table Data */
+#studentTable td {
+    padding: 14px 12px;
+    text-align: center;
+    color: #34495e;
+    border-bottom: 1px solid #e0e6f0;
+    font-size: 15px;
+}
+
+/* Alternate Row Colours */
+#studentTable tr:nth-child(even) {
+    background-color: #f0f4ff;
+}
+
+#studentTable tr:hover {
+    background-color: #fff0dc;
+}
+
+/* Buttons */
+button {
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    color: white;
+    padding: 13px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(71, 118, 230, 0.25);
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(255, 152, 0, 0.3);
+}
+/* Search Student Input */
+input[type="number"] {
+    padding: 12px;
+    width: 220px;
+    max-width: 90%;
+    border: 2px solid #8e54e9;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+input[type="number"]:focus {
+    border-color: #4776e6;
+    box-shadow: 0 0 8px rgba(71, 118, 230, 0.3);
+}
+
+/* Search Student Table */
+#studentTable {
+    width: 90%;
+    max-width: 1000px;
+    margin: 25px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(50, 70, 120, 0.15);
+}
+
+/* Table Headings */
+#studentTable th {
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    color: white;
+    padding: 16px 12px;
+    font-size: 15px;
+}
+
+/* Student Details */
+#studentTable td {
+    padding: 14px 12px;
+    text-align: center;
+    color: #34495e;
+    border-bottom: 1px solid #e0e6f0;
+    font-size: 15px;
+}
+
+/* Table Hover */
+#studentTable tr:hover {
+    background-color: #fff0dc;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #studentTable {
+        width: 100%;
+    }
+
+    #studentTable th,
+    #studentTable td {
+        padding: 8px 4px;
+        font-size: 12px;
+    }
+
+    input[type="number"] {
+        width: 150px;
+    }
+}
+/* Insert Student Form */
+body:has(input#sno) {
+    text-align: center;
+}
+
+/* Input Fields */
+body:has(input#sno) input {
+    width: 250px;
+    max-width: 90%;
+    padding: 12px;
+    margin: 8px;
+    border: 2px solid #d6dff5;
+    border-radius: 8px;
+    background-color: white;
+    color: #243b55;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Input Focus */
+body:has(input#sno) input:focus {
+    border-color: #8e54e9;
+    box-shadow: 0 0 8px rgba(142, 84, 233, 0.25);
+}
+
+/* Form Labels */
+body:has(input#sno) {
+    line-height: 1.7;
+}
+
+/* Buttons */
+body:has(input#sno) button {
+    min-width: 150px;
+    padding: 13px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Orange Hover Effect */
+body:has(input#sno) button:hover {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
+}
+
+/* Mobile-Friendly Design */
+@media (max-width: 600px) {
+    body:has(input#sno) input {
+        width: 90%;
+        margin: 6px auto;
+    }
+}
+/* Center Save and Home Page buttons */
+body:has(input#sno) button {
+    display: block;
+    margin: 15px auto;
+    min-width: 150px;
+}
+/* Update Student Page */
+body:has(input#sno) input {
+    width: 250px;
+    max-width: 90%;
+    padding: 12px;
+    margin: 8px;
+    border: 2px solid #d6dff5;
+    border-radius: 8px;
+    background: white;
+    color: #243b55;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Input Focus Effect */
+body:has(input#sno) input:focus {
+    border-color: #8e54e9;
+    box-shadow: 0 0 8px rgba(142, 84, 233, 0.25);
+}
+
+/* Center Update and Home Page Buttons */
+body:has(input#sno) button {
+    display: block;
+    min-width: 150px;
+    margin: 15px auto;
+    padding: 13px 25px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Orange Hover Effect */
+body:has(input#sno) button:hover {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
+}
+/* Delete Student Input */
+body:has(button[onclick="deleteStudent()"]) input[type="number"] {
+    width: 250px;
+    max-width: 90%;
+    padding: 12px;
+    margin: 10px;
+    border: 2px solid #d6dff5;
+    border-radius: 8px;
+    background: white;
+    color: #243b55;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Input Focus */
+body:has(button[onclick="deleteStudent()"]) input[type="number"]:focus {
+    border-color: #8e54e9;
+    box-shadow: 0 0 8px rgba(142, 84, 233, 0.25);
+}
+
+/* Center Delete and Home Page Buttons */
+body:has(button[onclick="deleteStudent()"]) button {
+    display: block;
+    min-width: 150px;
+    margin: 15px auto;
+    padding: 13px 25px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(90deg, #4776e6, #8e54e9);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Orange Hover Effect */
+body:has(button[onclick="deleteStudent()"]) button:hover {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
+}
+
+.home-picture {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.home-picture img {
+    width: 90%;
+    max-width: 900px;
+    height: auto;
+    border-radius: 15px;
+}
+.list-image {
+    width: 100%;
+    max-width: 900px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 20px auto;
+    display: block;
+}
